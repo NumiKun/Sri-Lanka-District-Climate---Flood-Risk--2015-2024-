@@ -1,0 +1,209 @@
+{
+  "project": "Sri Lanka District Flood Risk Early Warning System",
+  "created_at": "2026-09-24T09:32:12.241363",
+  "dataset": {
+    "file": "sri_lanka_flood_risk_modeled.csv",
+    "period": "2015-01-01 to 2024-12-31",
+    "districts": 25,
+    "total_records": 91325,
+    "features_raw": 10,
+    "features_total": 42
+  },
+  "architecture": {
+    "model_class": "FloodRiskLSTM",
+    "type": "Global Bidirectional LSTM + Stacked LSTM",
+    "input_shape": [
+      30,
+      42
+    ],
+    "output_shape": 7,
+    "bilstm_hidden": 128,
+    "lstm2_hidden": 64,
+    "dense_hidden": 64,
+    "dropout_rate": 0.25,
+    "output_activation": "Sigmoid",
+    "loss_function": "Huber (delta=1.0)",
+    "optimizer": "Adam",
+    "weight_decay": 0.0001,
+    "gradient_clipping": 1.0,
+    "total_parameters": 265671,
+    "trainable_parameters": 265671
+  },
+  "training": {
+    "sequence_length": 30,
+    "forecast_horizon": 7,
+    "batch_size": 512,
+    "max_epochs": 120,
+    "epochs_trained": 41,
+    "best_epoch": 26,
+    "initial_lr": 0.001,
+    "final_lr": 0.00025,
+    "early_stopping_patience": 15,
+    "train_split": "2015 to 2021",
+    "val_split": "2022 to 2022",
+    "test_split": "2023 to 2024"
+  },
+  "features": {
+    "feature_list": [
+      "precipitation_sum",
+      "rain_sum",
+      "soil_moisture_0_to_7cm_mean",
+      "soil_moisture_7_to_28cm_mean",
+      "temperature_2m_max",
+      "wind_speed_10m_max",
+      "rain_24h",
+      "rain_48h",
+      "rain_72h",
+      "soil_saturation_index",
+      "precip_lag_1d",
+      "precip_lag_3d",
+      "precip_lag_7d",
+      "precip_lag_14d",
+      "risk_lag_1d",
+      "risk_lag_3d",
+      "risk_lag_7d",
+      "risk_lag_14d",
+      "soil_sat_lag_1d",
+      "soil_sat_lag_3d",
+      "soil_sat_lag_7d",
+      "soil_sat_lag_14d",
+      "precip_roll_mean_7d",
+      "precip_roll_mean_14d",
+      "precip_roll_mean_30d",
+      "precip_roll_std_7d",
+      "precip_roll_std_14d",
+      "precip_roll_std_30d",
+      "risk_roll_mean_7d",
+      "risk_roll_mean_14d",
+      "risk_roll_mean_30d",
+      "soil_sat_roll_mean_7d",
+      "soil_sat_roll_mean_14d",
+      "soil_sat_roll_mean_30d",
+      "precip_momentum_7d",
+      "soil_saturation_trend",
+      "sin_month",
+      "cos_month",
+      "sin_doy",
+      "cos_doy",
+      "district_enc",
+      "climatic_zone_enc"
+    ],
+    "target": "flood_risk_score",
+    "scaling": "MinMaxScaler(0, 1) fit on training split only",
+    "lag_days": [
+      1,
+      3,
+      7,
+      14
+    ],
+    "rolling_windows": [
+      7,
+      14,
+      30
+    ]
+  },
+  "evaluation": {
+    "alert_threshold": 30.0,
+    "validation": {
+      "overall": {
+        "rmse": 9.599943764839768,
+        "mae": 4.9584221839904785,
+        "r2": 0.1370425820350647,
+        "mape": 12915974.0
+      },
+      "per_horizon": {
+        "T+1": {
+          "rmse": 9.000049167074902,
+          "mae": 4.667505741119385,
+          "r2": 0.23823124170303345
+        },
+        "T+2": {
+          "rmse": 9.390667653423305,
+          "mae": 4.788654327392578,
+          "r2": 0.1752411127090454
+        },
+        "T+3": {
+          "rmse": 9.583395872050245,
+          "mae": 4.964337348937988,
+          "r2": 0.14074254035949707
+        },
+        "T+4": {
+          "rmse": 9.653767584557864,
+          "mae": 4.948712348937988,
+          "r2": 0.12794578075408936
+        },
+        "T+5": {
+          "rmse": 9.718269949584045,
+          "mae": 5.042872428894043,
+          "r2": 0.11615431308746338
+        },
+        "T+6": {
+          "rmse": 9.85566111893609,
+          "mae": 5.12017297744751,
+          "r2": 0.09091335535049438
+        },
+        "T+7": {
+          "rmse": 9.965509826817614,
+          "mae": 5.176700115203857,
+          "r2": 0.07052385807037354
+        }
+      }
+    },
+    "test": {
+      "overall": {
+        "rmse": 10.42060663606367,
+        "mae": 5.656518936157227,
+        "r2": 0.21320503950119019,
+        "mape": 11760630.0
+      },
+      "per_horizon": {
+        "T+1": {
+          "rmse": 9.893192193120456,
+          "mae": 5.37411642074585,
+          "r2": 0.2951308488845825
+        },
+        "T+2": {
+          "rmse": 10.224121175367287,
+          "mae": 5.48712158203125,
+          "r2": 0.2460498809814453
+        },
+        "T+3": {
+          "rmse": 10.40767772148039,
+          "mae": 5.646985054016113,
+          "r2": 0.2177807092666626
+        },
+        "T+4": {
+          "rmse": 10.492601603774316,
+          "mae": 5.663882255554199,
+          "r2": 0.19965022802352905
+        },
+        "T+5": {
+          "rmse": 10.577902133684386,
+          "mae": 5.774686813354492,
+          "r2": 0.18612056970596313
+        },
+        "T+6": {
+          "rmse": 10.634537668298375,
+          "mae": 5.81243896484375,
+          "r2": 0.17678076028823853
+        },
+        "T+7": {
+          "rmse": 10.69184225111165,
+          "mae": 5.836405277252197,
+          "r2": 0.1698223352432251
+        }
+      }
+    }
+  },
+  "artifacts": {
+    "model_weights": "flood_risk_lstm_weights.pt",
+    "best_checkpoint": "best_model.pt",
+    "model_config": "model_config.json",
+    "feature_scaler": "feature_scaler.pkl",
+    "target_scaler": "target_scaler.pkl",
+    "label_encoder_district": "label_encoder_district.pkl",
+    "label_encoder_zone": "label_encoder_zone.pkl",
+    "training_log": "training_log.json",
+    "knowledge_document": "model_knowledge.json"
+  }
+}
