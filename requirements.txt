@@ -1,0 +1,25 @@
+# ==============================================================================
+# Sri Lanka District Climate & Flood Risk (2015–2024)
+# Multi-Day Ahead Flood Risk Early Warning System (LSTM Forecasting)
+# ==============================================================================
+
+# Core Scientific Computing & Data Manipulation
+numpy>=1.26.0
+pandas>=2.1.0
+scipy>=1.11.0
+
+# Machine Learning & Preprocessing
+scikit-learn>=1.3.0
+
+# Deep Learning Framework (PyTorch with Multi-Day LSTM & Sequence Modeling)
+torch>=2.0.0
+
+# Data Visualization & Exploratory Analysis
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Progress Tracking & Execution Utilities
+tqdm>=4.66.0
+
+# Interactive Notebook & Jupyter Kernel Support
+ipykernel>=6.25.0
